@@ -12,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Typography>React E-commerce</Typography>
+      <Typography component='h1' variant='h1'>React E-commerce</Typography>
     </div>
   )
 }
