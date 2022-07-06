@@ -1,4 +1,11 @@
 const classes = {
+    section: {
+        marginTop: 1,
+        marginBottom: 1
+    },
+    smallText: {
+        fontSize: '12px'
+    },
     main: {
         marginTop: 2,
         minHeight: '80vh',
@@ -19,7 +26,7 @@ const classes = {
     },
     brand: {
         fontWeight: 'bold',
-        fontSizr: '1.5rem'
+        fontSize: '1.5rem'
     }
 }
 
