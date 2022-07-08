@@ -1,9 +1,18 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Rating, Typography } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Rating,
+  Typography,
+} from '@mui/material';
 import React from 'react';
 import NextLink from 'next/link';
 import { urlForThumbnail } from '../utils/images';
 
-export default function ProductItem({ product }) {
+export default function ProductItem({ product, addToCartHandler }) {
   return (
     <Card>
       <NextLink href={`/product/${product.slug.current}`} passHref>
@@ -14,19 +23,19 @@ export default function ProductItem({ product }) {
             title={product.name}
           ></CardMedia>
           <CardContent>
-            <Typography>
-                {product.name}
-            </Typography>
-            <Rating value={product.rating} readOnly precision={0.5}/>
+            <Typography>{product.name}</Typography>
+            <Rating value={product.rating} readOnly precision={0.5} />
           </CardContent>
         </CardActionArea>
       </NextLink>
       <CardActions>
-        <Typography>
-            ${product.price}
-        </Typography>
-        <Button size="small" color='primary'>
-            Add to cart
+        <Typography>{product.price}€</Typography>
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => addToCartHandler(product)}
+        >
+          Add to cart
         </Button>
       </CardActions>
     </Card>
