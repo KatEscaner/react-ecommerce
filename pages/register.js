@@ -6,25 +6,53 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Form from '../components/Form';
 import Layout from '../components/Layout';
 import NextLink from 'next/link';
+import { useSnackbar } from 'notistack';
+import axios from 'axios';
+import jsCookie from 'js-cookie';
+import { useRouter } from 'next/router';
+import { Store } from '../utils/Store';
+import { getError } from '../utils/error';
 
 export default function RegisterScreen() {
+  const router = useRouter();
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/');
+    }
+  }, [router, userInfo]);
+
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm();
+  const { enqueueSnackbar } = useSnackbar();
 
-  const submitHandler = async ({
-    name,
-    email,
-    password,
-    confirmPassword,
-  }) => {};
+  const submitHandler = async ({ name, email, password, confirmPassword }) => {
+    if (password !== confirmPassword) {
+      enqueueSnackbar("Passwords don't match", { variant: 'error' });
+      return;
+    }
+    try {
+      const { data } = await axios.post('/api/users/register', {
+        name,
+        email,
+        password,
+      });
+      dispatch({ type: 'USER_LOGIN', payload: data });
+      jsCookie.set('userInfo', JSON.stringify(data));
+    } catch (err) {
+      enqueueSnackbar(getError(err), { variant: 'error' });
+      router.push('/');
+    }
+  };
 
   return (
     <Layout title="Register">
