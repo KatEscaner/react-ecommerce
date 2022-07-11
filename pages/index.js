@@ -1,14 +1,10 @@
-import { Alert, CircularProgress, Grid, Typography } from '@mui/material';
+import { Alert, CircularProgress, Grid } from '@mui/material';
 import axios from 'axios';
-import Head from 'next/head';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 import { useContext, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import ProductItem from '../components/ProductItem';
-import product from '../sanity/schemas/product';
-import styles from '../styles/Home.module.css';
 import client from '../utils/client';
 import { urlForThumbnail } from '../utils/images';
 import { Store } from '../utils/Store';

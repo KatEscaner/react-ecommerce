@@ -24,8 +24,10 @@ import { Store } from '../utils/Store';
 import { useContext } from 'react';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import { useRouter } from 'next/router';
 
 function CartScreen() {
+  const router = useRouter();
   const {
     state: {
       cart: { cartItems },
@@ -148,12 +150,17 @@ function CartScreen() {
                 <ListItem>
                   <Typography variant="h2">
                     Subtotal ({cartItems.reduce((a, c) => a + c.quantity, 0)}{' '}
-                    items) : ${' '}
-                    {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}
+                    items) :{' '}
+                    {cartItems.reduce((a, c) => a + c.quantity * c.price, 0)}€
                   </Typography>
                 </ListItem>
                 <ListItem>
-                  <Button fullWidth color="primary" variant="contained">
+                  <Button
+                    onClick={() => router.push('/shipping')}
+                    fullWidth
+                    color="primary"
+                    variant="contained"
+                  >
                     Checkout
                   </Button>
                 </ListItem>

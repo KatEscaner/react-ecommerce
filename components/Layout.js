@@ -20,7 +20,6 @@ import { useContext, useState } from 'react';
 import classes from '../utils/classes';
 import { Store } from '../utils/Store';
 import jsCookie from 'js-cookie';
-import { Router } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 
 export default function Layout({ title, description, children }) {
@@ -65,6 +64,9 @@ export default function Layout({ title, description, children }) {
     jsCookie.set('darkMode', newDarkMode ? 'ON' : 'OFF');
   };
   const [anchorEl, setAnchorEl] = useState(null);
+  const closeMemu = () => {
+    setAnchorEl(null);
+  };
   const loginMenuCloseHandler = (e, redirect) => {
     setAnchorEl(null);
     if (redirect) {
@@ -79,6 +81,8 @@ export default function Layout({ title, description, children }) {
     dispatch({ type: 'USER_LOGOUT' });
     jsCookie.remove('userInfo');
     jsCookie.remove('cartItems');
+    jsCookie.remove('shippingAddress');
+    jsCookie.remove('paymentMethod');
     router.push('/');
   };
   return (
@@ -103,7 +107,7 @@ export default function Layout({ title, description, children }) {
                 checked={darkMode}
                 onChange={darkModeChangeHandler}
               ></Switch>
-              <NextLink href="cart" passHref>
+              <NextLink href="/cart" passHref>
                 <Link>
                   <Typography component="span">
                     {cart.cartItems.length > 0 ? (
@@ -134,10 +138,10 @@ export default function Layout({ title, description, children }) {
                     anchorEl={anchorEl}
                     keepMounted
                     open={Boolean(anchorEl)}
-                    onClose={loginMenuCloseHandler}
+                    onClose={closeMemu}
                   >
                     <MenuItem
-                      onClick={(e) => loginMenuCloseHolder(e, '/profile')}
+                      onClick={(e) => loginMenuCloseHandler(e, '/profile')}
                     >
                       Profile
                     </MenuItem>

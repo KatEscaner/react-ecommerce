@@ -22,11 +22,12 @@ export default function LoginScreen() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { userInfo } = state;
+  const { redirect } = router.query;
   useEffect(() => {
     if (userInfo) {
-      router.push('/');
+      router.push(redirect || '/');
     }
-  }, [router, userInfo]);
+  }, [router, userInfo, redirect]);
   const {
     handleSubmit,
     control,
@@ -44,7 +45,7 @@ export default function LoginScreen() {
       jsCookie.set('userInfo', JSON.stringify(data));
     } catch (err) {
       enqueueSnackbar(getError(err), { variant: 'error' });
-      router.push('/');
+      router.push(redirect || '/');
     }
   };
 
@@ -120,7 +121,7 @@ export default function LoginScreen() {
           </ListItem>
           <ListItem>
             Do not have an account?{' '}
-            <NextLink href={'/register'} passHref>
+            <NextLink href={`/register?redirect=${redirect || '/'}`} passHref>
               <Link>Register</Link>
             </NextLink>
           </ListItem>
