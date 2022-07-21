@@ -11,17 +11,16 @@ import {
   Rating,
   Typography,
 } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
-import Layout from '../../components/Layout';
-import client from '../../utils/client';
-import { useSnackbar } from 'notistack';
-import NextLink from 'next/link';
-import classes from '../../utils/classes';
 import Image from 'next/image';
+import NextLink from 'next/link';
+import { useContext, useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import Layout from '../../components/Layout';
+import classes from '../../utils/classes';
+import client from '../../utils/client';
 import { urlFor, urlForThumbnail } from '../../utils/images';
-import axios from 'axios';
 import { Store } from '../../utils/Store';
-import { Router } from '@mui/icons-material';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 
 export default function ProductScreen(props) {
@@ -38,26 +37,17 @@ export default function ProductScreen(props) {
     error: '',
   });
   const { product, loading, error } = state;
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const product = await client.fetch(
           `
-                    *[_type == "product" && slug.current == $slug][0]`,
+            *[_type == "product" && slug.current == $slug][0]`,
           { slug }
         );
-        setState({
-          ...state,
-          product,
-          loading: false,
-        });
+        setState({ ...state, product, loading: false });
       } catch (err) {
-        setState({
-          ...state,
-          error: err.message,
-          loading: false,
-        });
+        setState({ ...state, error: err.message, loading: false });
       }
     };
     fetchData();
@@ -99,7 +89,7 @@ export default function ProductScreen(props) {
           <Box sx={classes.section}>
             <NextLink href="/" passHref>
               <Link>
-                <Typography>Back to result</Typography>
+                <Typography>back to result</Typography>
               </Link>
             </NextLink>
           </Box>
@@ -111,7 +101,6 @@ export default function ProductScreen(props) {
                 layout="responsive"
                 width={640}
                 height={640}
-                title={product.name}
               />
             </Grid>
             <Grid item md={3} xs={12}>
@@ -124,7 +113,7 @@ export default function ProductScreen(props) {
                 <ListItem>Category: {product.category}</ListItem>
                 <ListItem>Brand: {product.brand}</ListItem>
                 <ListItem>
-                  <Rating value={product.rating} readOnly precision={0.5} />
+                  <Rating value={product.rating} readOnly></Rating>
                   <Typography sx={classes.smallText}>
                     ({product.numReviews} reviews)
                   </Typography>
@@ -145,6 +134,10 @@ export default function ProductScreen(props) {
                       <Grid item xs={6}>
                         <Typography>{product.price}€</Typography>
                       </Grid>
+                    </Grid>
+                  </ListItem>
+                  <ListItem>
+                    <Grid container>
                       <Grid item xs={6}>
                         <Typography>Status</Typography>
                       </Grid>
@@ -157,13 +150,15 @@ export default function ProductScreen(props) {
                       </Grid>
                     </Grid>
                   </ListItem>
-                  <Button
-                    onClick={addToCartHandler}
-                    fullWidth
-                    variant="contained"
-                  >
-                    Add to cart
-                  </Button>
+                  <ListItem>
+                    <Button
+                      onClick={addToCartHandler}
+                      fullWidth
+                      variant="contained"
+                    >
+                      Add to cart
+                    </Button>
+                  </ListItem>
                 </List>
               </Card>
             </Grid>

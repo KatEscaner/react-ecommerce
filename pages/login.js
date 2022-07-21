@@ -104,7 +104,7 @@ export default function LoginScreen() {
                   error={Boolean(errors.password)}
                   helperText={
                     errors.password
-                      ? errors.email.type === 'minLength'
+                      ? errors.password.type === 'minLength'
                         ? 'Password length is more than 5'
                         : 'Password is requided'
                       : ''
