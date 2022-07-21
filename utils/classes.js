@@ -4,7 +4,7 @@ const classes = {
     marginBottom: 1,
   },
   smallText: {
-    fontSize: '12px',
+    fontSize: '15px',
   },
   main: {
     marginTop: 2,
@@ -30,7 +30,7 @@ const classes = {
   },
   navbarButton: {
     color: '#ffffff',
-    textTrasform: 'initial',
+    textTransform: 'initial',
   },
   fullWidth: {
     width: '100%',
